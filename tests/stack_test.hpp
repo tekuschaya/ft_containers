@@ -1,6 +1,6 @@
 #pragma once
 
-#include "test.hpp" //убрать
+#include "test.hpp"
 
 bool empty_stack_test()
 {

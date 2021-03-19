@@ -1,6 +1,6 @@
 #pragma once
 
-#include "test.hpp" //убрать
+#include "test.hpp"
 
 bool back_queue_test()
 {

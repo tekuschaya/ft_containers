@@ -85,7 +85,7 @@ class set : public Tree<T>
 			this->delete_node(tmp);
 			//this->printHelper(this->m_node->left, "", true);
 		}
-		size_type erase (const value_type& val) //переделать для мультимап?
+		size_type erase (const value_type& val)
 		{
 			iterator tmp = this->find(val);
 			if (tmp != this->end())
@@ -384,7 +384,6 @@ class multiset : public Tree<T>
 				this->erase(tmp);
 			}
 		}
-
 		iterator insert (const value_type& val)
 		{
 			return (iterator(this->insert_node(this->m_node, val)));

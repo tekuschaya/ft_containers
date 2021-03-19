@@ -1,6 +1,6 @@
 #pragma once
 
-#include "test.hpp" //убрать
+#include "test.hpp"
 
 template<typename T>
 bool check_size(std::list<T> &orig, ft::list<T> &my)
@@ -90,8 +90,8 @@ bool constructor_list_test()
 		return (false);
 
 	//from std::vector
-	std::list<int> orig5(g_vc.begin(), g_vc.end());
-	ft::list<int> my5(g_vc.begin(), g_vc.end());		
+	std::list<int> orig5(g_vec.begin(), g_vec.end());
+	ft::list<int> my5(g_vec.begin(), g_vec.end());		
 	if (!check_size(orig5, my5))
 		return (false);
 	if (!check_list(orig5, my5))
@@ -259,8 +259,8 @@ bool assign_list_test()
 	if (!check_list(orig, my))
 		return (false);
 
-	orig.assign(g_vc.begin(), g_vc.end());
-	my.assign(g_vc.begin(), g_vc.end());
+	orig.assign(g_vec.begin(), g_vec.end());
+	my.assign(g_vec.begin(), g_vec.end());
 	if (!check_size(orig, my))
 		return (false);
 	if (!check_list(orig, my))
@@ -698,9 +698,9 @@ bool splice_list_test()
 bool swap_list_test()
 {
 	std::list<int> orig1(g_ls.begin(), g_ls.end());
-	std::list<int> orig2(g_vc.begin(), g_vc.end());
+	std::list<int> orig2(g_vec.begin(), g_vec.end());
 	ft::list<int> my1(g_ls.begin(), g_ls.end());
-	ft::list<int> my2(g_vc.begin(), g_vc.end());
+	ft::list<int> my2(g_vec.begin(), g_vec.end());
 
 	orig1.swap(orig2);
 	my1.swap(my2);
@@ -815,9 +815,9 @@ bool relational_list_test()
 bool swap_list_list_test()
 {
 	std::list<int> orig1(g_ls.begin(), g_ls.end());
-	std::list<int> orig2(g_vc.begin(), g_vc.end());
+	std::list<int> orig2(g_vec.begin(), g_vec.end());
 	ft::list<int> my1(g_ls.begin(), g_ls.end());
-	ft::list<int> my2(g_vc.begin(), g_vc.end());
+	ft::list<int> my2(g_vec.begin(), g_vec.end());
 
 	std::swap(orig1, orig2);
 	ft::swap(my1, my2);

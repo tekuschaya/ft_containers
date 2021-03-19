@@ -71,16 +71,12 @@ class deque
 		typename std::enable_if<!std::numeric_limits<InputIterator>::is_specialized>::type* = 0)
 		{
 			this->d_alloc = alloc;
-			//this->d_size = last - first;;
 			this->d_size = 0;
-			//this->d_cap = last - first;
 			this->d_cap = 0;
 			this->d_start = 0;
 			this->d_end = 0;
-			//this->ptr = new value_type[this->d_size];
 			this->ptr = NULL;
 			this->assign(first, last);
-
 		}
 		deque (const deque& x)
 		{
@@ -100,7 +96,6 @@ class deque
 		typename std::enable_if<!std::numeric_limits<InputIterator>::is_specialized>::type* = 0)
 		{
 			this->clear();
-			//this->_reserve(last - first);
 			while (first != last)
 			{
 				this->push_back(*first);
@@ -117,13 +112,13 @@ class deque
 		reference at (size_type n)
 		{
 			if (n >= this->d_size)
-				throw std::out_of_range("out of range"); //проверить
+				throw std::out_of_range("out of range");
 			return this->ptr[this->d_start + n];
 		}
 		const_reference at (size_type n) const
 		{
 			if (n >= this->d_size)
-				throw std::out_of_range("out of range"); //проверить
+				throw std::out_of_range("out of range");
 			return this->ptr[this->d_start + n];
 		}
 		reference back()
@@ -263,13 +258,8 @@ class deque
 		{
 			return (std::numeric_limits<size_type>::max() / sizeof(value_type));
 		}
-		deque& operator= (const deque& x) //через аллокатор
+		deque& operator= (const deque& x)
 		{
-			//if (this->ptr) //убрать?
-			//	delete[] this->ptr;
-			//this->ptr = new value_type[x.size()];
-			//this->d_cap = x.size();
-			//this->v_size = 0;
 			this->assign(x.begin(), x.end());
 			return (*this);
 		}
@@ -331,22 +321,18 @@ class deque
 		reverse_iterator rbegin()
 		{
 			return (reverse_iterator(this->end()));
-			//return (reverse_iterator(&this->ptr[this->d_end - 1]));
 		}
 		const_reverse_iterator rbegin() const
 		{
 			return (const_reverse_iterator(this->end()));
-			//return (reverse_iterator(&this->ptr[this->d_end - 1]));
 		}
 		reverse_iterator rend()
 		{
 			return (reverse_iterator(this->begin()));
-			//return (reverse_iterator(&this->ptr[this->d_start - 1]));
 		}
 		const_reverse_iterator rend() const
 		{
 			return (const_reverse_iterator(this->begin()));
-			//return (reverse_iterator(&this->ptr[this->d_start - 1]));
 		}
 		void resize (size_type n, value_type val = value_type())
 		{

@@ -43,7 +43,7 @@ class list
 			one->value = two->value;
 			two->value = tmp;
 		}
-		node_ptr partition(node_ptr head, node_ptr tail)
+		node_ptr _partition(node_ptr head, node_ptr tail)
 		{
 			node_ptr p = head->prev;
 
@@ -55,7 +55,6 @@ class list
 						p = head;
 					else
 						p = p->next;
-					//p = (p == this->l_end)? head : p->next;
 					this->_swap_value(p, tmp);
 				}
 			}
@@ -63,8 +62,6 @@ class list
 				p = head;
 			else
 				p = p->next;
-			
-			//p = (p == this->l_end)? head : p->next;
 			this->_swap_value(p, tail);
 			return p;
 		}
@@ -72,9 +69,9 @@ class list
 		{
 			if (tail != this->l_end && head != tail && head != tail->next)
 			{
-				node_ptr p = partition(head, tail);
-				_quickSort(head, p->prev);
-				_quickSort(p->next, tail);
+				node_ptr p = this->_partition(head, tail);
+				this->_quickSort(head, p->prev);
+				this->_quickSort(p->next, tail);
 			}
 		}
 	public:
@@ -280,7 +277,6 @@ class list
 			while (first1 != last1 && first2 != last2)
 			{
 				while (first1 != last1 && !comp(*first2, *first1))
-				//while (first1 != last1 && comp(*first1, *first2))
 					++first1;
 				tmp = first2;
 				++first2;
@@ -423,27 +419,8 @@ class list
 				return ;
 			this->_quickSort(this->l_start, this->l_end->prev);
 		}
-		/*void sort()
-		{
-			if (this->l_size < 2)
-				return ;
-			iterator it = this->begin();
-			iterator ite = this->end();
-			iterator tmp = it;
-			while (++tmp != ite)
-			{
-				if (*tmp < *it)
-				{
-					_swap_value(it.getNode(), tmp.getNode());
-					it = this->begin();
-					tmp = it;
-				}
-				else
-					++it;
-			}
-		}*/
 		template <class Compare>
-		void sort (Compare comp) //переписать quicksort?
+		void sort (Compare comp)
 		{
 			if (this->l_size < 2)
 				return ;
@@ -454,7 +431,7 @@ class list
 			{
 				if (comp(*tmp, *it))
 				{
-					_swap_value(it.getNode(), tmp.getNode());
+					this->_swap_value(it.getNode(), tmp.getNode());
 					it = this->begin();
 					tmp = it;
 				}

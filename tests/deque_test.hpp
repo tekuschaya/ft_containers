@@ -1,6 +1,6 @@
 #pragma once
 
-#include "test.hpp" //убрать
+#include "test.hpp"
 
 template<typename T>
 bool check_size(std::deque<T> &orig, ft::deque<T> &my)

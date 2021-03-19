@@ -11,11 +11,8 @@ class vector
 	public:
 		typedef size_t size_type;
 		typedef Alloc allocator_type;
-		//typedef allocator_type<value_type> value_type;
 		typedef T value_type;
 		typedef ptrdiff_t difference_type;
-		//typedef Alloc::reference;
-		//typedef allocator_type::pointer;
 		typedef T& reference;
 		typedef T const & const_reference;
 		typedef T* pointer;
@@ -29,7 +26,6 @@ class vector
 		size_type v_capacity;
 		size_type v_size;
 		pointer ptr;
-
 	public:
 		explicit vector(const allocator_type& alloc = allocator_type())
 		{
@@ -40,17 +36,6 @@ class vector
 		}
 		explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 		{
-			//переделать через аллокатор
-			/*this->v_alloc = alloc;
-			this->ptr = this->v_alloc.allocate(n * sizeof(value_type)); //переделать value type
-			for (size_type i = 0; i < n; i++)
-				this->v_alloc.construct(&this->ptr[i], val); */
-			/*pointer tmp = this->ptr;
-			for (size_type i = 0; i < n; i++)
-			{
-				this->v_alloc.construct(tmp, val);
-				tmp++;
-			}*/
 			this->v_alloc = alloc;
 			this->ptr = new value_type[n];
 			for (size_type i = 0; i < n; i++)
@@ -67,28 +52,9 @@ class vector
 			this->v_capacity = 0;
 			this->ptr = NULL;
 			this->assign(first, last);
-			//this->ptr = new value_type[this->v_size];
-			//this->ptr = this->v_alloc.allocate(n);
-		/*	for (size_type i = 0; i < n; i++)
-			{
-				this->v_alloc.construct(&this->ptr[i], *first);
-			}
-		*/
-			/*while (first != last)
-			{
-				this->v_alloc.construct(tmp, *first);
-				++tmp;
-				++first;
-			}*/
-			//this->v_size = 0;
-			//this->v_capacity = n;
-			//this->assign(first, last);
 		}
 		vector(const vector& x)
 		{
-			/*this->alloc = alloc;
-			this->v_capacity = 0;
-			this->ptr = NULL; */
 			this->v_alloc = x.v_alloc;
 			this->v_size = 0;
 			this->v_capacity = 0;
@@ -104,13 +70,6 @@ class vector
 		}
 		~vector()
 		{
-			/*if (this->v_size)
-			{
-				this->v_alloc.destroy(this->ptr); //уничтожает только одно значение?
-				//this->v_alloc.destroy(&this->ptr[this->v_size]);
-				this->v_alloc.deallocate(this->ptr, this->v_size * sizeof(value_type));
-				this->ptr = NULL;
-			}*/
 			if (this->ptr)
 			{
 				delete[] this->ptr;
@@ -130,10 +89,6 @@ class vector
 		typename std::enable_if<!std::numeric_limits<InputIterator>::is_specialized>::type* = 0)
 		{
 			this->clear();
-			/*if (this->ptr)
-				this->v_alloc.deallocate(this->ptr, this->v_size * sizeof(value_type));
-			this->v_size = 0;
-			this->v_capacity = 0;*/
 			while (first != last)
 			{
 				this->push_back(*first);
@@ -143,11 +98,6 @@ class vector
 		void assign(size_type n, const value_type& val)
 		{
 			this->clear();
-			/*if (this->ptr)
-				this->v_alloc.deallocate(this->ptr, this->v_size * sizeof(value_type));
-			this->v_size = 0;
-			this->v_capacity = 0;*/
-			
 			if (n > this->capacity())
 			{
 				size_type cap = this->capacity();
@@ -166,13 +116,13 @@ class vector
 		reference at (size_type n)
 		{
 			if (n >= this->v_size)
-				throw std::out_of_range("out of range"); //почитать 
+				throw std::out_of_range("out of range");
 			return this->ptr[n];
 		}
 		const_reference at (size_type n) const
 		{
 			if (n >= this->v_size)
-				throw std::out_of_range("out of range"); //почитать 
+				throw std::out_of_range("out of range");
 			return this->ptr[n];
 		}
 		reference back()
@@ -198,15 +148,6 @@ class vector
 		void clear()
 		{
 			this->v_size = 0;
-			/*while (this->v_size)
-			{
-				this->v_size--;
-				this->v_alloc.destroy(&this->ptr[this->v_size]);
-			}*/
-
-			//нужно ли очищать содержимое элементов?
-			//delete[] this->ptr; //???
-			//this->v_capacity = 0;
 		}
 		bool empty() const
 		{
@@ -228,8 +169,7 @@ class vector
 			return this->erase(position, ++tmp);
 		}
 		iterator erase(iterator first, iterator last)
-		{ //return end if the operation erased the last element in the sequence.
-			//iterator tmp = this->begin();
+		{
 			size_type i = first - this->begin();
 			while (last != this->end())
 			{
@@ -314,17 +254,12 @@ class vector
 		}
 		size_type max_size() const
 		{
-			//fail char kakogo hera
 			return (std::numeric_limits<size_type>::max() / sizeof(value_type));
 		}
 		void pop_back()
 		{
-			//удаление содержимого? аллокатор
 			if (this->v_size)
-			{
 				this->v_size--;
-				//this->v_alloc.destroy(&(this->ptr[this->v_size]));
-			}
 		}
 		void push_back(const value_type& val)
 		{
@@ -354,30 +289,6 @@ class vector
 		{
 			return (const_reverse_iterator(this->begin()));
 		}
-		/*void reserve(size_type n)
-		{
-			pointer tmp = this->ptr;
-			if (n > this->max_size())
-				throw std::length_error("length error");
-			if (n > this->capacity())
-			{
-				if (!(this->ptr = this->v_alloc.allocate(n * sizeof(value_type))))
-					throw std::bad_alloc();
-				if (this->v_size)
-				{
-					for (size_type i = 0; i < this->v_size; i++)
-					{
-						this->v_alloc.construct(&this->ptr[i], tmp[i]);
-						//this->v_alloc.destroy(&(this->ptr[i]));
-					}
-					this->v_alloc.deallocate(tmp, this->v_size * sizeof(value_type));
-					tmp = NULL;
-				}
-				this->v_capacity = n;
-			}
-		}*/
-
-
 		void reserve(size_type n)
 		{
 			pointer tmp;
@@ -385,7 +296,7 @@ class vector
 				throw std::length_error("length error");
 			if (n > this->capacity())
 			{
-				tmp = new value_type[n]; //throw bad alloc
+				tmp = new value_type[n];
 				for (size_type i = 0; i < this->v_size; i++)
 					tmp[i] = this->ptr[i];
 				if (this->ptr)

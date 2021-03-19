@@ -3,8 +3,8 @@
 #include <memory>
 #include <iostream>
 #include <limits>
-#include <utility> //for pair
-#include <functional> //for value compare (std::binary_function)
+#include <utility>
+#include <functional>
 
 namespace ft
 {
@@ -25,14 +25,13 @@ template <typename T>
 class IterList
 {
 	public:
-		//typedef T value_type;
+		typedef T value_type;
 		typedef NodeList<T>* ptr;
 		typedef T* pointer;
 		typedef T& reference;
 		typedef const T& const_reference;
 		typedef const T* const_pointer;
-		//typedef ptrdiff_t difference_type;
-	//private:
+		typedef ptrdiff_t difference_type;
 	protected:
 		ptr iter;
 	public:
@@ -45,11 +44,11 @@ class IterList
 			this->iter = other.iter;
 			return *this;
 		}
-		reference operator*() //в конце const?
+		reference operator*()
 		{
 			return this->iter->value;
 		}
-		pointer operator->() //в конце const?
+		pointer operator->()
 		{
 			return &this->iter->value;
 		}
@@ -76,19 +75,18 @@ class IterList
 			return tmp;
 		}
 		
-		bool operator!=(IterList const &iter) //убрать?
+		bool operator!=(IterList const &iter)
 		{
 			if (this->iter != iter.iter)
 				return true;
 			return false;
 		}
-		bool operator==(IterList const &iter) //убрать?
+		bool operator==(IterList const &iter)
 		{
 			if (this->iter == iter.iter)
 				return true;
 			return false;
 		}
-		
 		ptr getNode() const
 		{
 			return this->iter;
@@ -98,83 +96,81 @@ class IterList
 template <class T>
 class ConstIterList
 {
-public:
-	typedef NodeList<T>* ptr;
-	typedef IterList<T> iterator;
-	typedef T* pointer;
-	typedef T& reference;
-	typedef const T& const_reference;
-	typedef const T* const_pointer;
-	//typedef const T* const_pointer;
-    //typedef const T& const_reference;
-	//typedef ptrdiff_t difference_type;
-private:
-	ptr iter;
-public:
-	ConstIterList() {}
-	ConstIterList(const ptr iter): iter(iter) {}
-	ConstIterList(const ConstIterList &other): iter(other.iter) {}
-	ConstIterList(const iterator &other): iter(other.getNode()) {}
-	~ConstIterList() {}
+	public:
+		typedef T value_type;
+		typedef NodeList<T>* ptr;
+		typedef IterList<T> iterator;
+		typedef T* pointer;
+		typedef T& reference;
+		typedef const T& const_reference;
+		typedef const T* const_pointer;
+	protected:
+		ptr iter;
+	public:
+		ConstIterList() {}
+		ConstIterList(const ptr iter): iter(iter) {}
+		ConstIterList(const ConstIterList &other): iter(other.iter) {}
+		ConstIterList(const iterator &other): iter(other.getNode()) {}
+		~ConstIterList() {}
 
-	ConstIterList &operator=(const ConstIterList &other)
-	{
-		this->iter = other.iter;
-		return (*this);
-	}
-	ConstIterList &operator=(const iterator &other)
-	{
-		this->iter = other.getNode();
-		return (*this);
-	}
-	reference operator*() const //обычный reference?
-	{
-		return (this->iter->value);
-	}
-	pointer operator->() const //обычный pointer?
-	{
-		return (&this->iter->value);
-	}
+		ConstIterList &operator=(const ConstIterList &other)
+		{
+			this->iter = other.iter;
+			return (*this);
+		}
+		ConstIterList &operator=(const iterator &other)
+		{
+			this->iter = other.getNode();
+			return (*this);
+		}
+		reference operator*() const
+		{
+			return (this->iter->value);
+		}
+		pointer operator->() const
+		{
+			return (&this->iter->value);
+		}
 
-	ConstIterList &operator++()
-	{
-		this->iter = this->iter->next;
-		return *this;
-	}
-	ConstIterList &operator--() //return const?
-	{
-		this->iter = this->iter->prev;
-		return *this;
-	}
-	ConstIterList operator++(int)
-	{
-		ConstIterList tmp = *this;
-		++(*this);
-		return tmp;
-	}
-	ConstIterList operator--(int)
-	{
-		ConstIterList tmp = *this;
-		--(*this);
-		return tmp;
-	}
+		ConstIterList &operator++()
+		{
+			this->iter = this->iter->next;
+			return *this;
+		}
+		ConstIterList &operator--()
+		{
+			this->iter = this->iter->prev;
+			return *this;
+		}
+		ConstIterList operator++(int)
+		{
+			ConstIterList tmp = *this;
+			++(*this);
+			return tmp;
+		}
+		ConstIterList operator--(int)
+		{
+			ConstIterList tmp = *this;
+			--(*this);
+			return tmp;
+		}
 
-	bool operator!=(ConstIterList const &iter) //убрать?
-	{
-		if (this->iter != iter.iter)
-			return true;
-		return false;
-	}
-	bool operator==(ConstIterList const &iter) //убрать?
-	{
-		if (this->iter == iter.iter)
-			return true;
-		return false;
-	}
-	const ptr getNode() const
-	{
-		return this->iter;
-	}
+		bool operator!=(ConstIterList const &iter)
+		{
+			if (this->iter != iter.iter)
+				return true;
+			return false;
+		}
+		bool operator==(ConstIterList const &iter)
+		{
+			if (this->iter == iter.iter)
+				return true;
+			return false;
+		}
+		const ptr getNode() const
+		{
+			return this->iter;
+		}
 };
 
 template <class T>
@@ -192,7 +188,7 @@ class IterTree
 {
 	public:
 		typedef NodeTree<T>* ptr;
-		//typedef T value_type;
+		typedef T value_type;
 		typedef T& reference;
 		typedef T* pointer;
 		typedef const T& const_reference;
@@ -209,11 +205,11 @@ class IterTree
 			this->iter = other.iter;
 			return *this;
 		}
-		reference operator*() //в конце const?
+		reference operator*()
 		{
 			return this->iter->value;
 		}
-		pointer operator->() //в конце const?
+		pointer operator->()
 		{
 			return &this->iter->value;
 		}
@@ -221,7 +217,6 @@ class IterTree
 		{
 			return this->iter;
 		}
-
 		IterTree &operator++() 
 		{
 			ptr tmp;
@@ -273,8 +268,6 @@ class IterTree
 			--(*this);
 			return tmp;
 		}
-
-		//убрать операторы?
 		bool operator!=(IterTree const &other)
 		{
 			if (this->iter != other.iter)
@@ -307,7 +300,7 @@ class ConstIterTree
 	public:
 		typedef NodeTree<T>* ptr;
 		typedef IterTree<T> iterator;
-		//typedef T value_type;
+		typedef T value_type;
 		typedef T& reference;
 		typedef T* pointer;
 		typedef const T& const_reference;
@@ -342,7 +335,7 @@ class ConstIterTree
 		{
 			return this->iter;
 		}
-		ConstIterTree &operator++()  //return const?
+		ConstIterTree &operator++()
 		{
 			ptr tmp;
 			if (this->iter->right)
@@ -394,7 +387,6 @@ class ConstIterTree
 			return tmp;
 		}
 
-		//убрать операторы?
 		bool operator!=(ConstIterTree const &other)
 		{
 			if (this->iter != other.iter)
@@ -432,8 +424,6 @@ class IterVector
 		typedef const T& const_reference;
 		typedef size_t size_type;
 		typedef ptrdiff_t difference_type;
-
-	//private:
 	protected:
 		pointer iter;
 	public:
@@ -446,19 +436,18 @@ class IterVector
 			this->iter = other.iter;
 			return *this;
 		}
-		pointer operator->() //const?
+		pointer operator->()
 		{
 			return this->iter;
 		}
-		reference operator*() //const?
+		reference operator*()
 		{
 			return *this->iter;
 		}
-		reference operator[](difference_type n) //зачем?
+		reference operator[](difference_type n)
 		{
 			return this->iter[n];
 		}
-	
 		IterVector &operator++()
 		{
 			++this->iter;
@@ -499,8 +488,6 @@ class IterVector
 			this->iter -= n;
 			return *this;
 		}
-
-		//убрать операторы сравнения?
 		bool operator!=(IterVector const &iter)
 		{
 			if (this->iter != iter.iter)
@@ -546,8 +533,7 @@ class ConstIterVector
 		typedef size_t size_type;
 		typedef ptrdiff_t difference_type;
 		typedef IterVector<T> iterator;
-
-	private:
+	protected:
 		pointer iter;
 	public:
 		ConstIterVector() {}
@@ -573,11 +559,10 @@ class ConstIterVector
 		{
 			return *this->iter;
 		}
-		reference operator[](difference_type n) //зачем?
+		reference operator[](difference_type n)
 		{
 			return this->iter[n];
 		}
-	
 		ConstIterVector &operator++()
 		{
 			++this->iter;
@@ -618,7 +603,6 @@ class ConstIterVector
 			this->iter -= n;
 			return *this;
 		}
-
 		bool operator!=(ConstIterVector const &iter)
 		{
 			if (this->iter != iter.iter)
@@ -653,31 +637,22 @@ class ConstIterVector
 		}
 };
 
-
-
-
-struct IteratorTrait {}; //почему
-
 template<typename It>
-class ReverseIterator:
-	public It
+class ReverseIterator: public It
 {
 public:
-	//using typename It::value_type;
     using typename It::pointer;
     using typename It::const_pointer;
     using typename It::reference;
     using typename It::const_reference;
-    //using typename It::difference_type;
-public:
 	ReverseIterator(): It() {}
 	ReverseIterator(It const &it): It(it) {}
 	ReverseIterator(ReverseIterator const &other): It(other.iter) {}
-	ReverseIterator &operator=(ReverseIterator const &other) {
+	ReverseIterator &operator=(ReverseIterator const &other)
+	{
 		this->iter = other.iter;
 		return (*this);
 	}
-
 	reference operator*()
 	{
 		It tmp(*this);
