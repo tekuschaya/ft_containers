@@ -25,7 +25,6 @@ enum containers {
 
 int main()
 {
-	vector_start();
 	int number;
 	while (true)
 	{
